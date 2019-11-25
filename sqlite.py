@@ -4,7 +4,8 @@ import random
 
 source = 'qwertyhnbgfvcds86xzaujmikolp'
 
-#生成字符串的函数
+
+# 生成字符串的函数
 def get_str(x, y):
     str_num = random.randint(x, y)
     astr = ''
@@ -14,11 +15,11 @@ def get_str(x, y):
     return astr
 
 
-#生成一个数据列表的函数
+# 生成一个数据列表的函数
 def get_data_list(n):
     lists = []
     for i in range(n):
-        lists.append((get_str(2,4), get_str(8,12)))
+        lists.append((get_str(2, 4), get_str(8, 12)))
 
     return lists
 
@@ -39,26 +40,25 @@ if __name__ == '__main__':
     con = sqlite3.connect(':memory:')
     cur = con.cursor()
 
-
-    #创建一个表
+#   创建一个表
     cur.execute('CREATE TABLE t_person('
                 'id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, '
                 'name TEXT, '
                 'password TEXT)')
 
-    #向表中添加数据
+#   向表中添加数据
     cur.execute('INSERT INTO t_person '
                 '(name, password) '
                 'VALUES '
-                '(?, ?)', (get_str(2,4), get_str(8,12)))
+                '(?, ?)', (get_str(2, 4), get_str(8, 12)))
     output()
 
-    #在表中添加多条数据
+#   在表中添加多条数据
     cur.executemany('INSERT INTO t_person (name, password) VALUES (?, ?)', get_data_list(3))
     output_all()
 
 
-    #删除某条数据
+#   删除某条数据
     cur.execute('DELETE FROM t_person WHERE id = ?', (3,))
     output()
 
